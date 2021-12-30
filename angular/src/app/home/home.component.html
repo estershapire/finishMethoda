@@ -1,0 +1,50 @@
+<div class="flex">
+    <div class="a">
+        <p>add status</p>
+        <form [formGroup]="myForm" (submit)="addNewStatus()">
+            <input type="text" formControlName="statusName" />
+            <input type="submit" value="add">
+        </form>
+        <div>
+            <div class="flex" *ngFor="let i of statusList">
+                <input type="radio" checked="i.initial" (change)="changeInitial(i.name)" name="i.name" />
+                <div class="a" [innerText]="i.name"></div>
+                <button class="a" (click)="removeStatus(i.name)">remove</button>
+                <div class="a" *ngIf="i.initial" [innerText]="'[initial]'"></div>
+                <div class="a" *ngIf="i.orphan" [innerText]="'[orphan]'"></div>
+                <div class="a" *ngIf="i.final" [innerText]="'[final]'"></div>
+            </div>
+        </div>
+    </div>
+    <div class="a">
+        <p>add transition</p>
+        <form [formGroup]="myForm2" (submit)="addTransition()">
+            <div class="flex">
+                <div>name:</div>
+                <input type="text" formControlName="transitionName" />
+                <div>from</div>
+                <select formControlName="from">
+                    <option></option>
+                    <option *ngFor="let i of statusList" name="f" value="i.name">{{i.name}}</option>
+                </select>
+                <div>to</div>
+                <select formControlName="to">
+                    <option></option>
+                    <option *ngFor="let i of statusList">{{i.name}}</option>
+                </select>
+                    <input type="submit" value="add">
+            </div>
+        </form>
+        <div>
+            <div class="flex" *ngFor="let i of transitionList">
+                <div class="a" [innerText]="i.name"></div>
+                <button class="a" (click)="removeTransition(i.name)">remove</button>
+                <div class="a" [innerText]="i.fromStatus"></div>
+                <div class="a" [innerText]="'-->'"></div>
+                <div class="a" [innerText]="i.toStatus"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<button id="reset" (click)="reset()">Reset</button>
